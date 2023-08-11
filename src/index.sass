@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap')
+
+@mixin flex-center
+    display: flex
+    justify-content: center
+@mixin pad-radius
+    border-radius: 7px  
+    padding: 1rem 2rem 2rem 2rem
+#root
+    display: flex
+    width: 100vw
+    justify-content: space-between
+body
+    margin: 0
+    font-family: 'Montserrat', sans-serif
+    background-color: #190551
+    color: #fff
+    overflow-x: hidden
+    display: flex
+    height: 100svh
+.chart
+    width: 30rem
+nav
+    height: 100%
+    padding: 2rem
+    width: 10rem
+    background-color: #000
+li
+    list-style: none
+.user
+    transform: rotate(-90deg)
+    left: -3rem
+    position: absolute
+    bottom: 8rem
+ul
+    padding: 0
+    text-decoration: none
+    display: flex
+    flex-direction: column
+    gap: 2rem
+a
+    text-decoration: none
+    color: #fff
+    &:focus
+        font-weight: 700
+.generator-card
+    background-color: #000
+    width: 10rem
+    height: 18rem
+    @include pad-radius
+    @include flex-center
+    flex-direction: column
+    text-align: start
+    gap: 2rem
+    p
+        padding: 0
+        margin: 0
+        font-size: 13px
+    .p--green
+        color: #42f542
+    .p--red
+        color: #f54242
+
+    .generator-card__content
+        gap: 0.5rem
+        display: grid
+
+section
+    padding: 2rem 5rem 2rem 5rem
+    width: 100%
+    display: flex
+    justify-content: center
+    text-align: center
+    align-items: baseline
+    .energy-wrapper__card
+        height: 21rem
+        display: flex
+        align-items: center
+        gap: 2rem
+.button
+    cursor: pointer
+    border-radius: 9px
+    background-color: #a52786
+    border: 2px solid #a52786
+    color: #ebebeb
+    height: 100%
+    padding: .7rem 1.5rem
+    font-weight: 700
+    font-family: Montserrat,sans-serif
+.button--link
+    background-color: transparent
+    font-family: 'Montserrat', sans-serif
+    color: #fff
+    cursor: pointer
+    border: none !important
+    text-decoration: underline
+
+.dialogmenu__bcg
+    position: absolute
+    left: 40%
+    width: 11rem
+    background-color: #000
+    @include pad-radius
+    .dialogmenu__wrapper
+        @include flex-center
+        flex-direction: column
+        align-items: center
+        width: 100%
+        form
+            display: flex
+            flex-direction: column
+            width: 100%
+            label
+                margin-top: 0.5rem
+            input[type=text],input[type=password],input[type=email]
+                font-family: 'Montserrat', sans-serif
+                background-color: transparent
+                border: none
+                border-bottom: 1px solid #fff
+                color: #fff
+                margin-top: 0.5rem
+    .buttonwrap
+        text-align: end
+        display: flex
+        flex-direction: column
+        justify-content: end
+        align-items: end
+        width: 100%
+        padding-top: 1rem
+td
+    padding-inline: 1rem
+tbody td
+    font-size: 15px
+    padding-top: 0.7rem
+    padding-bottom: 0.3rem
+    border-bottom: 1px solid #ffffff79
+th
+    padding-bottom: 0.7rem
+    .button--link
+        font-weight: 700
+        font-size: 1rem
+.pagination
+    display: flex
+    justify-content: center
+    gap: 2rem
+    margin-bottom: 2rem
