@@ -22,9 +22,8 @@ ChartJS.register(
 );
 
 const GeneratedValuesGraph = () => {
-  const generatedValuesData: { value: number; timestamp: number }[] = useSelector(
-    (state: any) => state.generatedValues.generatedValuesData
-  );
+  const generatedValuesData: { value: number; timestamp: number }[] =
+    useSelector((state: any) => state.generatedValues.generatedValuesData);
   const lastTenData = generatedValuesData.slice(-10);
   const timestamps = lastTenData.map(({ timestamp }) =>
     new Date(timestamp).toLocaleString()

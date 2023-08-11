@@ -1,5 +1,10 @@
-import { createReducer, PayloadAction, } from '@reduxjs/toolkit';
-import { addGeneratedValue, sortGeneratedValues, toggleProcess, setCurrentPage } from './reduxActions';
+import { createReducer, PayloadAction } from "@reduxjs/toolkit";
+import {
+  addGeneratedValue,
+  sortGeneratedValues,
+  toggleProcess,
+  setCurrentPage,
+} from "./reduxActions";
 
 interface GenerateValue {
   value: number;
@@ -9,8 +14,8 @@ interface GenerateValue {
 interface GenerateState {
   generatedValuesData: GenerateValue[];
   processRunning: boolean;
-  minValue: number,
-  maxValue: number
+  minValue: number;
+  maxValue: number;
   currentPage: number;
 }
 const initialState: GenerateState = {
@@ -23,12 +28,15 @@ const initialState: GenerateState = {
 
 const generateReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(addGeneratedValue, (state, action: PayloadAction<GenerateValue>) => {
-      const { value, timestamp } = action.payload;
-      state.generatedValuesData.push({ value, timestamp });
-      state.minValue = Math.min(state.minValue, value);
-      state.maxValue = Math.max(state.maxValue, value);
-    })
+    .addCase(
+      addGeneratedValue,
+      (state, action: PayloadAction<GenerateValue>) => {
+        const { value, timestamp } = action.payload;
+        state.generatedValuesData.push({ value, timestamp });
+        state.minValue = Math.min(state.minValue, value);
+        state.maxValue = Math.max(state.maxValue, value);
+      }
+    )
     .addCase(toggleProcess, (state) => {
       state.processRunning = !state.processRunning;
     })
@@ -37,9 +45,9 @@ const generateReducer = createReducer(initialState, (builder) => {
     })
     .addCase(sortGeneratedValues, (state, action: PayloadAction<string>) => {
       const sortBy = action.payload;
-      if (sortBy === 'byValue') {
+      if (sortBy === "byValue") {
         state.generatedValuesData.sort((a, b) => a.value - b.value);
-      } else if (sortBy === 'byTime') {
+      } else if (sortBy === "byTime") {
         state.generatedValuesData.sort((a, b) => a.timestamp - b.timestamp);
       }
     });

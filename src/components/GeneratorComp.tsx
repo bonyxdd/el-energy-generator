@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addGeneratedValue,
-} from "../redux/reduxActions";
+import { addGeneratedValue } from "../redux/reduxActions";
 import ProcessToggle from "./ProcessToggle";
 
 const GeneratorComp = ({ genName }: any) => {
@@ -10,9 +8,8 @@ const GeneratorComp = ({ genName }: any) => {
   const processRunning = useSelector(
     (state: any) => state.generatedValues.processRunning
   );
-  const generatedValuesData: { value: number; timestamp: number }[] = useSelector(
-    (state: any) => state.generatedValues.generatedValuesData
-  );
+  const generatedValuesData: { value: number; timestamp: number }[] =
+    useSelector((state: any) => state.generatedValues.generatedValuesData);
   const minValue: number = useSelector(
     (state: any) => state.generatedValues.minValue
   );
@@ -31,7 +28,12 @@ const GeneratorComp = ({ genName }: any) => {
       intervalId = setInterval(() => {
         const randomValue = (Math.random() * 89.99).toFixed(2);
         const currentTimeStamp = Number(new Date());
-        dispatch(addGeneratedValue({ value: Number(randomValue), timestamp: currentTimeStamp }));
+        dispatch(
+          addGeneratedValue({
+            value: Number(randomValue),
+            timestamp: currentTimeStamp,
+          })
+        );
       }, 1000);
 
       return () => clearInterval(intervalId);
@@ -39,7 +41,10 @@ const GeneratorComp = ({ genName }: any) => {
   }, [processRunning, dispatch]);
 
   useEffect(() => {
-    localStorage.setItem("generatedValues", JSON.stringify(generatedValuesData));
+    localStorage.setItem(
+      "generatedValues",
+      JSON.stringify(generatedValuesData)
+    );
   }, [generatedValuesData]);
 
   return (
