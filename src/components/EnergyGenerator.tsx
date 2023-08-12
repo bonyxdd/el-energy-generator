@@ -7,7 +7,7 @@ import { addGenerator } from "../redux/reduxActions";
 const EnergyGenerator = () => {
   const dispatch = useDispatch();
   const [genNames, setGenNames] = React.useState<number[]>([]);
-  const genSpeed = 1;
+  const genSpeed = 1000;
 
   useEffect(() => {
     const storedGeneratedValues = localStorage.getItem("generatedValues");
@@ -26,14 +26,12 @@ const EnergyGenerator = () => {
     dispatch(addGenerator({ genName: newGenName }));
 
     const storedGeneratedValues = localStorage.getItem("generatedValues");
-    console.log("🚀 ~ file: EnergyGenerator.tsx:25 ~ createNewGenerator ~ storedGeneratedValues:", storedGeneratedValues)
     const updatedData = {
       ...JSON.parse(storedGeneratedValues),
       [newGenName]: {
       },
     };
     localStorage.setItem("generatedValues", JSON.stringify(updatedData));
-    console.log("🚀 ~ file: EnergyGenerator.tsx:36 ~ createNewGenerator ~ updatedData:", updatedData)
   };
   return (
     <section className="energy-wrapper">

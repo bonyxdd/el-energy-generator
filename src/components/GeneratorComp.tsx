@@ -6,13 +6,10 @@ import ProcessToggle from "./ProcessToggle";
 const GeneratorComp = ({ genName, speed }: {genName:number, speed:number}) => {
   const dispatch = useDispatch();
   const generator = useSelector((state: any) => state.generatedValues[genName]);
-  console.log("🚀 ~ file: GeneratorComp.tsx:9 ~ GeneratorComp ~ generator:", generator)
   const processRunning = generator?.processRunning;
   const generatedValuesData = generator?.generatedValuesData || [];
   const minValue = generator?.minValue;
-  console.log("🚀 ~ file: GeneratorComp.tsx:13 ~ GeneratorComp ~ minValue:", minValue)
   const maxValue = generator?.maxValue;
-  console.log("🚀 ~ file: GeneratorComp.tsx:15 ~ GeneratorComp ~ maxValue:", maxValue)
   const lastValue =
     generatedValuesData.length > 0
       ? generatedValuesData[generatedValuesData.length - 1].value

@@ -23,6 +23,19 @@ export const UserRegistration: React.FC<UserRegistrationProps> = ({
       setError("Fill in all information");
       return;
     }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      setError("Invalid email format");
+      return;
+    }
+    if (userName.length < 4) {
+      setError("Username should be at least 5 characters long");
+      return;
+    }
+    if (password.length < 5) {
+      setError("Password should be at least 5 characters long");
+      return;
+    }
     if (password !== confirmPassword) {
       setError("Passwords don't match");
       return;

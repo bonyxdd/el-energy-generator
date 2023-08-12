@@ -36,7 +36,6 @@ const storedGeneratedValues = localStorage.getItem("generatedValues");
 const initialState: GeneratedValues = storedGeneratedValues
   ? JSON.parse(storedGeneratedValues)
   : {};
-console.log("🚀 ~ file: generateReducer.tsx:33 ~ initialState:", initialState);
 
 const generateReducer = createReducer(initialState, (builder) => {
   builder
