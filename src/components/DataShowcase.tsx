@@ -39,6 +39,7 @@ const DataShowcase = () => {
     <section>
       <div className="table__wrapper">
         <div className="pagination">
+        <p>Pages: {totalPages }</p>
           <button
             className="button"
             onClick={() => handlePageChange(currentPage - 1)}
@@ -53,6 +54,7 @@ const DataShowcase = () => {
           >
             Next
           </button>
+          <p>Data: {totalData }</p>
         </div>
         <table>
           <thead>

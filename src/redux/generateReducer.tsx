@@ -20,7 +20,7 @@ interface GenerateState {
 }
 const initialState: GenerateState = {
   generatedValuesData: [],
-  processRunning: true,
+  processRunning: false,
   minValue: Number.MAX_VALUE,
   maxValue: Number.MIN_VALUE,
   currentPage: NaN,

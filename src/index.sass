@@ -8,30 +8,31 @@
     padding: 1rem 2rem 2rem 2rem
 #root
     display: flex
-    width: 100vw
     justify-content: space-between
 body
     margin: 0
     font-family: 'Montserrat', sans-serif
-    background-color: #190551
+    background-color: #070721
     color: #fff
     overflow-x: hidden
     display: flex
-    height: 100svh
+    min-height: 100svh
 .chart
     width: 30rem
 nav
-    height: 100%
     padding: 2rem
     width: 10rem
     background-color: #000
+    position: fixed
+    height: 100%
+    transform: translateX(0)
 li
     list-style: none
 .user
-    transform: rotate(-90deg)
-    left: -3rem
     position: absolute
-    bottom: 8rem
+    left: 0
+    bottom: 13rem
+    width: 14rem
 ul
     padding: 0
     text-decoration: none
@@ -66,23 +67,24 @@ a
         display: grid
 
 section
-    padding: 2rem 5rem 2rem 5rem
+    padding: 2rem 5rem 2rem 0rem
     width: 100%
     display: flex
     justify-content: center
     text-align: center
-    align-items: baseline
+    align-items: start
+    margin-left: 14rem
     .energy-wrapper__card
-        height: 21rem
         display: flex
         align-items: center
         gap: 2rem
+        padding-inline: 5rem
 .button
     cursor: pointer
     border-radius: 9px
-    background-color: #a52786
-    border: 2px solid #a52786
-    color: #ebebeb
+    background-color: #841f6b
+    border: 2px solid #9d257f
+    color: #ddd7cf
     height: 100%
     padding: .7rem 1.5rem
     font-weight: 700
@@ -96,11 +98,6 @@ section
     text-decoration: underline
 
 .dialogmenu__bcg
-    position: absolute
-    left: 40%
-    width: 11rem
-    background-color: #000
-    @include pad-radius
     .dialogmenu__wrapper
         @include flex-center
         flex-direction: column
@@ -127,6 +124,8 @@ section
         align-items: end
         width: 100%
         padding-top: 1rem
+.table__wrapper
+    padding-inline: 5rem
 td
     padding-inline: 1rem
 tbody td

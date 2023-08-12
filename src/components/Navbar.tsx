@@ -6,6 +6,7 @@ export const Navbar = () => {
   const dispatch = useDispatch();
   const authorized = useSelector((state: any) => state.store.authorized);
   const username = useSelector((state: any) => state.store.username);
+
   return (
     <nav>
       {authorized && (
