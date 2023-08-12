@@ -21,19 +21,18 @@ const storedGeneratedValues = localStorage.getItem("generatedValues");
 const initialGeneratedValues: GeneratedValues = storedGeneratedValues
 ? JSON.parse(storedGeneratedValues)
 : {};
-console.log("🚀 ~ file: store.tsx:21 ~ initialGeneratedValues:", initialGeneratedValues)
+
+//Getting data from local storage
 
 const generatedValuesInitialState: GeneratedValues = {};
 Object.keys(initialGeneratedValues).forEach((genName) => {
   generatedValuesInitialState[Number(genName)] = {
     generatedValuesData: initialGeneratedValues[Number(genName)]?.generatedValuesData || [],
     processRunning: false,
-    minValue: 0,
-    maxValue: 0,
+    minValue: initialGeneratedValues[Number(genName)]?.minValue,
+    maxValue: initialGeneratedValues[Number(genName)]?.maxValue,
   };
 });
-
-console.log("🚀 ~ file: store.tsx:27 ~ generatedValuesInitialState:", generatedValuesInitialState)
 
 const store = configureStore({
   reducer: {

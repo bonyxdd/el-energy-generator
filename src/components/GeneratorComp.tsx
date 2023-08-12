@@ -3,15 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { addGeneratedValue } from "../redux/reduxActions";
 import ProcessToggle from "./ProcessToggle";
 
-const GeneratorComp = ({ genName }: {genName:number}) => {
+const GeneratorComp = ({ genName, speed }: {genName:number, speed:number}) => {
   const dispatch = useDispatch();
   const generator = useSelector((state: any) => state.generatedValues[genName]);
   console.log("🚀 ~ file: GeneratorComp.tsx:9 ~ GeneratorComp ~ generator:", generator)
   const processRunning = generator?.processRunning;
   const generatedValuesData = generator?.generatedValuesData || [];
-  console.log("🚀 ~ file: GeneratorComp.tsx:12 ~ GeneratorComp ~ generatedValuesData:", generatedValuesData)
-  const minValue = generator?.minValue || 0;
-  const maxValue = generator?.maxValue || 0;
+  const minValue = generator?.minValue;
+  console.log("🚀 ~ file: GeneratorComp.tsx:13 ~ GeneratorComp ~ minValue:", minValue)
+  const maxValue = generator?.maxValue;
+  console.log("🚀 ~ file: GeneratorComp.tsx:15 ~ GeneratorComp ~ maxValue:", maxValue)
   const lastValue =
     generatedValuesData.length > 0
       ? generatedValuesData[generatedValuesData.length - 1].value
@@ -31,7 +32,7 @@ const GeneratorComp = ({ genName }: {genName:number}) => {
             timestamp: currentTimeStamp,
           })
         );
-      }, 1000);
+      }, speed);
 
       return () => clearInterval(intervalId);
     }
@@ -43,6 +44,7 @@ const GeneratorComp = ({ genName }: {genName:number}) => {
       ...existingData,
       [genName]: {
         generatedValuesData: generatedValuesData,
+        processRunning: processRunning,
         minValue: minValue,
         maxValue: maxValue,
       },

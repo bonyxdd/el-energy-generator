@@ -11,10 +11,14 @@ const ProcessToggle: React.FC<ProcessToggleProps> = ({ genName }) => {
   const processRunning = useSelector(
     (state: any) => state.generatedValues[genName]?.processRunning
   );
+  console.log("🚀 ~ file: ProcessToggle.tsx:14 ~ processRunning:", processRunning)
 
   useEffect(() => {}, [processRunning, dispatch]);
   return (
-    <button className="button" onClick={() => dispatch(toggleProcess({genName}))}>
+    <button className="button" onClick={() => {
+      dispatch(toggleProcess({ genName }));
+      console.log("🚀 ~ file: ProcessToggle.tsx:19 ~ toggleProcess:", toggleProcess({genName}))
+    }}>
       {processRunning ? "Toggle Off" : "Toggle On"}
     </button>
   );

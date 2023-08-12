@@ -69,6 +69,7 @@ const DataShowcase = () => {
           >
             Next
           </button>
+          <p>{totalData }</p>
         </div>
         <table>
           <thead>
