@@ -11,12 +11,13 @@ interface GenerateValue {
 }
 
 interface GeneratorState {
-  [genName: number]: {
   generatedValuesData: GenerateValue[];
   processRunning: boolean;
   minValue: number;
   maxValue: number;
-  };
+}
+interface GeneratedValues {
+  [genName: number]: GeneratorState;
 }
 
 const calculateMinValue = (values: GenerateValue[]): number => {
@@ -26,20 +27,12 @@ const calculateMinValue = (values: GenerateValue[]): number => {
 const calculateMaxValue = (values: GenerateValue[]): number => {
   return values.length > 0 ? Math.max(...values.map((value) => value.value)) : 0;
 };
-const initialState: GeneratorState = {
-  1: {
-    generatedValuesData: [],
-    processRunning: false,
-    minValue: 0,
-    maxValue: 0,
-  },
-  2: {
-    generatedValuesData: [],
-    processRunning: false,
-    minValue: 0,
-    maxValue: 0,
-  },
-};
+
+const storedGeneratedValues = localStorage.getItem("generatedValues");
+const initialState: GeneratedValues = storedGeneratedValues
+? JSON.parse(storedGeneratedValues)
+: {};
+console.log("🚀 ~ file: generateReducer.tsx:33 ~ initialState:", initialState)
 
 const generateReducer = createReducer(initialState, (builder) => {
   builder

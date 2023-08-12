@@ -1,30 +1,26 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useState } from "react";
 
 const DataShowcase = () => {
-  const dispatch = useDispatch();
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [sortedBy, setSortedBy] = useState<"byTime" | "byValue" | "byGenerator">("byTime");
   const [currentPage, setCurrentPage] = useState(1);
 
   const allGeneratedValues: Record<number, { value: number; timestamp: number }[]> =
-    useSelector((state: any) => {
-      const allData: Record<number, { value: number; timestamp: number }[]> = {};
-      Object.keys(state.generatedValues).forEach((genName: string) => {
-        allData[genName] = state.generatedValues[genName].generatedValuesData || [];
-      });
-      return allData;
+  useSelector((state: any) => {
+    const allData: Record<number, { value: number; timestamp: number }[]> = {};
+    Object.keys(state.generatedValues).forEach((genName: string) => {
+      allData[genName] = state.generatedValues[genName].generatedValuesData || [];
     });
+    return allData;
+  });
   
-    const totalData = Object.values(allGeneratedValues).reduce(
-      (total, data) => total + data.length,
-      0
-      );
+  const totalData = Object.values(allGeneratedValues).reduce(
+    (total, data) => total + data.length,
+    0
+    );
   const dataPerPage = 20;
   const totalPages = Math.ceil(totalData / dataPerPage);
-  const startIndex = (Number(currentPage) - 1) * dataPerPage;
-  console.log("🚀 ~ file: DataShowcase.tsx:32 ~ DataShowcase ~ startIndex:", startIndex)
-  const endIndex = startIndex + dataPerPage;
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {

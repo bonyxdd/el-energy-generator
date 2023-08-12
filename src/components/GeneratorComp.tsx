@@ -5,16 +5,13 @@ import ProcessToggle from "./ProcessToggle";
 
 const GeneratorComp = ({ genName }: {genName:number}) => {
   const dispatch = useDispatch();
-  const generator = useSelector((state: any) => state.generatedValues[genName] || {});
-  const processRunning = useSelector((state: any) => state.generatedValues[genName]?.processRunning);
-  const generatedValuesData: { value: number; timestamp: number }[] =
-    useSelector((state: any) => state.generatedValues[genName]?.generatedValuesData || []);
-  const minValue: number = useSelector(
-    (state: any) => state.generatedValues[genName].minValue
-  );
-  const maxValue: number = useSelector(
-    (state: any) => state.generatedValues[genName].maxValue
-  );
+  const generator = useSelector((state: any) => state.generatedValues[genName]);
+  console.log("🚀 ~ file: GeneratorComp.tsx:9 ~ GeneratorComp ~ generator:", generator)
+  const processRunning = generator?.processRunning;
+  const generatedValuesData = generator?.generatedValuesData || [];
+  console.log("🚀 ~ file: GeneratorComp.tsx:12 ~ GeneratorComp ~ generatedValuesData:", generatedValuesData)
+  const minValue = generator?.minValue || 0;
+  const maxValue = generator?.maxValue || 0;
   const lastValue =
     generatedValuesData.length > 0
       ? generatedValuesData[generatedValuesData.length - 1].value
@@ -45,12 +42,13 @@ const GeneratorComp = ({ genName }: {genName:number}) => {
     const newData = {
       ...existingData,
       [genName]: {
-        genName,
-        generatedValues: generatedValuesData,
+        generatedValuesData: generatedValuesData,
+        minValue: minValue,
+        maxValue: maxValue,
       },
     };
     localStorage.setItem("generatedValues", JSON.stringify(newData));
-  }, [generatedValuesData, genName]);
+  }, [generatedValuesData, genName, processRunning, minValue, maxValue]);
 
   return (
     <div className="generator-card">

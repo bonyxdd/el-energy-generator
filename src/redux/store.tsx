@@ -7,39 +7,41 @@ interface GenerateValue {
   timestamp: number;
 }
 
-const storedGeneratedValues = localStorage.getItem("generatedValues");
-const initialGeneratedValues = storedGeneratedValues
-? JSON.parse(storedGeneratedValues)
-: [] as GenerateValue[];
-const minValue = initialGeneratedValues.reduce(
-  (min:number, { value }: {value:number}) => Math.min(min, value),
-  Number.MAX_VALUE
-);
+interface GeneratorState {
+  generatedValuesData: GenerateValue[];
+  processRunning: boolean;
+  minValue: number;
+  maxValue: number;
+}
+interface GeneratedValues {
+  [genName: number]: GeneratorState;
+}
 
-const maxValue = initialGeneratedValues.reduce(
-  (max:number, { value }: {value:number}) => Math.max(max, value),
-  Number.MIN_VALUE
-);
+const storedGeneratedValues = localStorage.getItem("generatedValues");
+const initialGeneratedValues: GeneratedValues = storedGeneratedValues
+? JSON.parse(storedGeneratedValues)
+: {};
+console.log("🚀 ~ file: store.tsx:21 ~ initialGeneratedValues:", initialGeneratedValues)
+
+const generatedValuesInitialState: GeneratedValues = {};
+Object.keys(initialGeneratedValues).forEach((genName) => {
+  generatedValuesInitialState[Number(genName)] = {
+    generatedValuesData: initialGeneratedValues[Number(genName)]?.generatedValuesData || [],
+    processRunning: false,
+    minValue: 0,
+    maxValue: 0,
+  };
+});
+
+console.log("🚀 ~ file: store.tsx:27 ~ generatedValuesInitialState:", generatedValuesInitialState)
+
 const store = configureStore({
   reducer: {
     store: storeReducer,
     generatedValues: generateReducer,
   },
   preloadedState: {
-    generatedValues: {
-      1: {
-      generatedValuesData: initialGeneratedValues,
-      processRunning: false,
-      minValue: minValue === Number.MAX_VALUE ? 0 : minValue,
-      maxValue: maxValue === Number.MIN_VALUE ? 0 : maxValue,
-      },
-      2: {
-        generatedValuesData: initialGeneratedValues,
-        processRunning: false,
-        minValue: minValue === Number.MAX_VALUE ? 0 : minValue,
-        maxValue: maxValue === Number.MIN_VALUE ? 0 : maxValue,
-        },
-    },
+    generatedValues: generatedValuesInitialState,
   },
 });
 

@@ -9,7 +9,7 @@ interface ProcessToggleProps {
 const ProcessToggle: React.FC<ProcessToggleProps> = ({ genName }) => {
   const dispatch = useDispatch();
   const processRunning = useSelector(
-    (state: any) => state.generatedValues[genName].processRunning
+    (state: any) => state.generatedValues[genName]?.processRunning
   );
 
   useEffect(() => {}, [processRunning, dispatch]);

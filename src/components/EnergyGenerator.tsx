@@ -12,7 +12,7 @@ const EnergyGenerator = () => {
         <div className="generator--wrapper">
           <GeneratorComp genName={2} />
           <GeneratedValuesGraph genName={2} />
-          </div>
+        </div>
       </div>
     </section>
   );
