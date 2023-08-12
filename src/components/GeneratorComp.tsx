@@ -3,18 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { addGeneratedValue } from "../redux/reduxActions";
 import ProcessToggle from "./ProcessToggle";
 
-const GeneratorComp = ({ genName }: any) => {
+const GeneratorComp = ({ genName }: {genName:number}) => {
   const dispatch = useDispatch();
-  const processRunning = useSelector(
-    (state: any) => state.generatedValues.processRunning
-  );
+  const generator = useSelector((state: any) => state.generatedValues[genName] || {});
+  const processRunning = useSelector((state: any) => state.generatedValues[genName]?.processRunning);
   const generatedValuesData: { value: number; timestamp: number }[] =
-    useSelector((state: any) => state.generatedValues.generatedValuesData);
+    useSelector((state: any) => state.generatedValues[genName]?.generatedValuesData || []);
   const minValue: number = useSelector(
-    (state: any) => state.generatedValues.minValue
+    (state: any) => state.generatedValues[genName].minValue
   );
   const maxValue: number = useSelector(
-    (state: any) => state.generatedValues.maxValue
+    (state: any) => state.generatedValues[genName].maxValue
   );
   const lastValue =
     generatedValuesData.length > 0
@@ -30,6 +29,7 @@ const GeneratorComp = ({ genName }: any) => {
         const currentTimeStamp = Number(new Date());
         dispatch(
           addGeneratedValue({
+            genName,
             value: Number(randomValue),
             timestamp: currentTimeStamp,
           })
@@ -41,11 +41,16 @@ const GeneratorComp = ({ genName }: any) => {
   }, [processRunning, dispatch]);
 
   useEffect(() => {
-    localStorage.setItem(
-      "generatedValues",
-      JSON.stringify(generatedValuesData)
-    );
-  }, [generatedValuesData]);
+    const existingData = JSON.parse(localStorage.getItem("generatedValues") || "{}");
+    const newData = {
+      ...existingData,
+      [genName]: {
+        genName,
+        generatedValues: generatedValuesData,
+      },
+    };
+    localStorage.setItem("generatedValues", JSON.stringify(newData));
+  }, [generatedValuesData, genName]);
 
   return (
     <div className="generator-card">
@@ -64,7 +69,7 @@ const GeneratorComp = ({ genName }: any) => {
         <p>Min Value: {minValue.toFixed(2)} kWh</p>
         <p>Max Value: {maxValue.toFixed(2)} kWh</p>
       </div>
-      <ProcessToggle />
+      <ProcessToggle genName={genName}/>
     </div>
   );
 };

@@ -5,8 +5,14 @@ const EnergyGenerator = () => {
   return (
     <section className="energy-wrapper">
       <div className="energy-wrapper__card">
-        <GeneratorComp genName={"Generator N:1"} />
-        <GeneratedValuesGraph />
+        <div className="generator--wrapper">
+        <GeneratorComp genName={1} />
+        <GeneratedValuesGraph genName={1} />
+        </div>
+        <div className="generator--wrapper">
+          <GeneratorComp genName={2} />
+          <GeneratedValuesGraph genName={2} />
+          </div>
       </div>
     </section>
   );

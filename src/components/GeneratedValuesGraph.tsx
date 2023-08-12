@@ -21,9 +21,9 @@ ChartJS.register(
   Legend
 );
 
-const GeneratedValuesGraph = () => {
+const GeneratedValuesGraph = ({genName}: {genName:number}) => {
   const generatedValuesData: { value: number; timestamp: number }[] =
-    useSelector((state: any) => state.generatedValues.generatedValuesData);
+    useSelector((state: any) => state.generatedValues[genName]?.generatedValuesData || []);
   const lastTenData = generatedValuesData.slice(-10);
   const timestamps = lastTenData.map(({ timestamp }) =>
     new Date(timestamp).toLocaleString()

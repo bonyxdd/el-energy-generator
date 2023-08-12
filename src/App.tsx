@@ -13,7 +13,7 @@ const App = () => {
       {authorized && (
         <Routes>
           <Route path="/generators" element={<EnergyGenerator />} />
-          <Route path="/data" element={<DataShowcase />} />
+          <Route path="/data" element={<DataShowcase/>} />
         </Routes>
       )}
     </Router>

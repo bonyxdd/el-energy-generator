@@ -12,12 +12,12 @@ const initialGeneratedValues = storedGeneratedValues
 ? JSON.parse(storedGeneratedValues)
 : [] as GenerateValue[];
 const minValue = initialGeneratedValues.reduce(
-  (min:number, { value }: {value:number}) => (value < min ? value : min),
+  (min:number, { value }: {value:number}) => Math.min(min, value),
   Number.MAX_VALUE
 );
 
 const maxValue = initialGeneratedValues.reduce(
-  (max:number, { value }: {value:number}) => (value > max ? value : max),
+  (max:number, { value }: {value:number}) => Math.max(max, value),
   Number.MIN_VALUE
 );
 const store = configureStore({
@@ -27,11 +27,18 @@ const store = configureStore({
   },
   preloadedState: {
     generatedValues: {
+      1: {
       generatedValuesData: initialGeneratedValues,
       processRunning: false,
       minValue: minValue === Number.MAX_VALUE ? 0 : minValue,
       maxValue: maxValue === Number.MIN_VALUE ? 0 : maxValue,
-      currentPage: 1,
+      },
+      2: {
+        generatedValuesData: initialGeneratedValues,
+        processRunning: false,
+        minValue: minValue === Number.MAX_VALUE ? 0 : minValue,
+        maxValue: maxValue === Number.MIN_VALUE ? 0 : maxValue,
+        },
     },
   },
 });

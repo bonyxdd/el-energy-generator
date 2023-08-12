@@ -1,36 +1,56 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentPage } from "../redux/reduxActions";
 import { useState } from "react";
+
 const DataShowcase = () => {
   const dispatch = useDispatch();
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const [sortedBy, setSortedBy] = useState<"byTime" | "byValue">("byTime");
-  const generatedValuesData: { value: number; timestamp: number }[] =
-    useSelector((state: any) => state.generatedValues.generatedValuesData);
-  const currentPage: number = useSelector(
-    (state: any) => state.generatedValues.currentPage
-  );
+  const [sortedBy, setSortedBy] = useState<"byTime" | "byValue" | "byGenerator">("byTime");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const allGeneratedValues: Record<number, { value: number; timestamp: number }[]> =
+    useSelector((state: any) => {
+      const allData: Record<number, { value: number; timestamp: number }[]> = {};
+      Object.keys(state.generatedValues).forEach((genName: string) => {
+        allData[genName] = state.generatedValues[genName].generatedValuesData || [];
+      });
+      return allData;
+    });
+  
+    const totalData = Object.values(allGeneratedValues).reduce(
+      (total, data) => total + data.length,
+      0
+      );
   const dataPerPage = 20;
-  const totalData = generatedValuesData.length;
   const totalPages = Math.ceil(totalData / dataPerPage);
-  const startIndex = (currentPage - 1) * dataPerPage;
+  const startIndex = (Number(currentPage) - 1) * dataPerPage;
+  console.log("🚀 ~ file: DataShowcase.tsx:32 ~ DataShowcase ~ startIndex:", startIndex)
   const endIndex = startIndex + dataPerPage;
 
   const handlePageChange = (newPage: number) => {
-    dispatch(setCurrentPage(newPage));
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
   };
-  const handleSort = (sort: "byTime" | "byValue") => {
+  const handleSort = (sort: "byTime" | "byValue" | "byGenerator") => {
     setSortedBy(sort);
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   };
-
-  const sortedData = generatedValuesData.slice().sort((a, b) => {
+  const combinedData = Object.entries(allGeneratedValues)
+    .flatMap(([genName, data]) =>
+      data.map((entry) => ({
+        genName: Number(genName),
+        ...entry,
+      }))
+    )
+  .sort((a, b) => {
     if (sortedBy === "byTime") {
       return sortOrder === "asc"
         ? a.timestamp - b.timestamp
         : b.timestamp - a.timestamp;
     } else if (sortedBy === "byValue") {
       return sortOrder === "asc" ? a.value - b.value : b.value - a.value;
+    } else if (sortedBy === "byGenerator") {
+      return sortOrder === "asc" ? a.genName - b.genName : b.genName - a.genName;
     }
     return 0;
   });
@@ -67,7 +87,14 @@ const DataShowcase = () => {
                     : "▼"}
                 </button>
               </th>
-              <th>Content</th>
+              <th>                <button className="button--link" onClick={() => handleSort("byGenerator")}>
+                  Generator{" "}
+                  {sortedBy === "byGenerator"
+                    ? sortOrder === "asc"
+                      ? "▲"
+                      : "▼"
+                    : "▼"}
+                </button></th>
               <th>
                 <button className="button--link" onClick={() => handleSort("byValue")}>
                   Value{" "}
@@ -81,13 +108,15 @@ const DataShowcase = () => {
             </tr>
           </thead>
           <tbody>
-            {sortedData.slice(startIndex, endIndex).map((entry, index) => (
-              <tr key={index}>
-                <td>{new Date(entry.timestamp).toLocaleString()}</td>
-                <td>Power Consumption</td>
-                <td>{entry.value.toFixed(2)}</td>
-              </tr>
-            ))}
+            {combinedData
+              .slice((currentPage - 1) * dataPerPage, currentPage * dataPerPage)
+              .map((entry, index) => (
+                <tr key={index}>
+                  <td>{new Date(entry.timestamp).toLocaleString()}</td>
+                  <td>{entry.genName}</td>
+                  <td>{entry.value.toFixed(2)}</td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
