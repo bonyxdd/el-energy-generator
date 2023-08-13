@@ -2,14 +2,17 @@ import { Link } from "react-router-dom";
 import { LoginRegister } from "./LoginRegister";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthorized } from "../redux/reduxActions";
+import { useState } from "react";
 export const Navbar = () => {
   const dispatch = useDispatch();
   const authorized = useSelector((state: any) => state.store.authorized);
   const username = useSelector((state: any) => state.store.username);
-
+  const [navToggle, setNavToggle] = useState(false);
   return (
-    <nav>
+    <nav className={`${navToggle ? "nav--hidden" : ""}`}>
       {authorized && (
+        <>
+          <button className="toggle-nav" onClick={()=>setNavToggle(!navToggle)}>x</button>
         <ul>
           <li>
             <Link to="/generators">Generators</Link>
@@ -24,7 +27,8 @@ export const Navbar = () => {
           >
             Log out: {username}
           </button>
-        </ul>
+          </ul>
+          </>
       )}
       <div className="login">{!authorized && <LoginRegister />}</div>
     </nav>

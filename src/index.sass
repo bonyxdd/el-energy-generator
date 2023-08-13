@@ -26,6 +26,18 @@ nav
     position: fixed
     height: 100%
     transform: translateX(0)
+    transition: transform 0.3s
+.nav--hidden
+    transform: translateX(-11rem)
+.toggle-nav
+    display: none
+    cursor: pointer
+    position: relative
+    border: none
+    background-color: transparent
+    font-size: 2rem
+    line-height: 0rem
+    left: 9.7rem
 li
     list-style: none
 .user
@@ -143,3 +155,18 @@ th
     justify-content: center
     gap: 2rem
     margin-bottom: 2rem
+@media (max-width: 844px)
+    .toggle-nav
+        display: block
+    section
+        margin-left: 0
+        .energy-wrapper__card
+            display: block
+            .chart
+                width: 25rem
+                margin-left: -4rem
+    .table__wrapper
+        font-size: 0.8rem
+        padding-inline: 4rem
+        td
+            font-size: 0.7rem
