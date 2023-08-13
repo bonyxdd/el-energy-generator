@@ -33,7 +33,11 @@ const generateReducer = createReducer(initialState, (builder) => {
       (state, action: PayloadAction<GenerateValue>) => {
         const { value, timestamp } = action.payload;
         state.generatedValuesData.push({ value, timestamp });
-        state.minValue = Math.min(state.minValue, value);
+        if (state.minValue === 0) {
+          state.minValue = Math.min(100, value);
+        } else {
+          state.minValue = Math.min(state.minValue, value);
+        }
         state.maxValue = Math.max(state.maxValue, value);
       }
     )

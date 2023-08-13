@@ -29,7 +29,7 @@ const store = configureStore({
     generatedValues: {
       generatedValuesData: initialGeneratedValues,
       processRunning: false,
-      minValue: minValue === Number.MAX_VALUE ? 100 : minValue,
+      minValue: minValue === Number.MAX_VALUE ? 0 : minValue,
       maxValue: maxValue === Number.MIN_VALUE ? 0 : maxValue,
       currentPage: 1,
     },
