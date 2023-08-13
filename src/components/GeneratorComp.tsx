@@ -34,7 +34,7 @@ const GeneratorComp = ({ genName }: any) => {
             timestamp: currentTimeStamp,
           })
         );
-      }, 1000);
+      }, 15000);
 
       return () => clearInterval(intervalId);
     }
